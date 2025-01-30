@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:8000/'; // Replace with your Django backend URL
+  private baseUrl = 'http://127.0.0.1:8001/'; // Replace with your Django backend URL
   private tokenKey = 'auth-token';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -25,7 +25,9 @@ export class AuthService {
 
   // Save token
   saveToken(token: string) {
+   
     localStorage.setItem(this.tokenKey, token);
+
   }
 
   // Get token

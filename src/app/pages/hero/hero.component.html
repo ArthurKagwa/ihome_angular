@@ -1,1 +1,26 @@
-<p>hero works!</p>
+<section class="relative bg-[url('https://source.unsplash.com/1600x900/?farm,fields')] bg-cover bg-center bg-no-repeat h-screen flex items-center justify-center">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  
+    <div class="relative z-10 text-center text-white max-w-2xl p-6">
+      <!-- Title -->
+      <h1 class="text-4xl font-extrabold sm:text-5xl md:text-6xl">
+        Welcome to <span class="text-accent-yellow">FarmApp</span>
+      </h1>
+  
+      <!-- Subtitle -->
+      <p class="mt-4 text-lg sm:text-xl">
+        Manage your farms efficiently, track resources, and grow your success with ease.
+      </p>
+  
+      <!-- CTA Buttons -->
+      <div class="mt-6 flex flex-wrap justify-center gap-4">
+        <a
+          routerLink="/signup"
+          class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-md text-lg transition-all"
+        >
+          Get Started
+        </a>
+        
+      </div>
+    </div>
+  </section>

@@ -1,14 +1,53 @@
-<div>
-    <h2>Login</h2>
-    <form (ngSubmit)="onLogin()">
-      <label for="username">Username:</label>
-      <input id="username" [(ngModel)]="username" name="username" required />
-      <br />
-      <label for="password">Password:</label>
-      <input id="password" type="password" [(ngModel)]="password" name="password" required />
-      <br />
-      <button type="submit">Login</button>
+<div class="flex min-h-screen items-center justify-center bg-neutral-cream dark:bg-secondary-dark">
+  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md dark:bg-secondary-light">
+    <!-- Title -->
+    <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4 text-center">
+      Login
+    </h2>
+
+    <!-- Form -->
+    <form (ngSubmit)="onLogin()" class="space-y-4">
+      <!-- Username Field -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Username</label>
+        <input 
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          class="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary-dark focus:ring-primary-dark dark:bg-secondary dark:text-neutral-cream"
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Password</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          class="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary-dark focus:ring-primary-dark dark:bg-secondary dark:text-neutral-cream"
+        />
+      </div>
+
+      <!-- Error Message -->
+      <p *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</p>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full bg-primary text-white p-2 rounded-md hover:bg-primary-dark transition-all dark:bg-primary-light dark:hover:bg-primary-dark"
+      >
+        Login
+      </button>
     </form>
-    <p *ngIf="errorMessage" style="color: red">{{ errorMessage }}</p>
+
+    <!-- Signup Link -->
+    <p class="mt-4 text-center text-sm text-gray-600 dark:text-neutral-cream">
+      Don't have an account? 
+      <a routerLink="/signup" class="text-accent-yellow hover:underline dark:text-accent-orange">Sign up</a>
+    </p>
   </div>
-  
+</div>
