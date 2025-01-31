@@ -17,6 +17,7 @@ export class FarmDashboardComponent implements OnInit {
   newFarmLocation = '';
   newFarmEmail = '';
   newFarmPhone = '';
+  addingError: { [key: string]: string[] } = {}; // ✅ Proper error type
 
   constructor(private farmsService: FarmsService) {}
 
@@ -35,20 +36,30 @@ export class FarmDashboardComponent implements OnInit {
     });
   }
   addFarm() {
+    this.addingError = {}; // ✅ Reset errors before submitting
+
     const newFarm = {
       name: this.newFarmName,
       location: this.newFarmLocation,
       email: this.newFarmEmail,
       phone_number: this.newFarmPhone,
     };
-    console.log('New farm:', newFarm);
+    // console.log('New farm:', newFarm);
     this.farmsService.createFarm(newFarm).subscribe({
       next: (data) => {
         console.log('Farm created:', data);
         this.loadFarms();
+        // Clear the form
+        this.newFarmName = '';
+        this.newFarmLocation = '';
+        this.newFarmEmail = '';
+        this.newFarmPhone = '';
+        
       },
       error: (error) => {
-        console.error('Error creating farm:', error);
+        this.addingError = error.error;
+        console.error('Error creating farm:', error.error);
+
       }
     });
   }
