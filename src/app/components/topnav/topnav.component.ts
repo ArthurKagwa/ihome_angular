@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-topnav',
@@ -28,5 +28,8 @@ export class TopnavComponent {
     // Simulate sign-out logic
     this.isAuthenticated = false;
     console.log('User signed out');
+    localStorage.removeItem('auth-token');
+    //redirect to login page
+    window.location.href = '/hero';
   }
 }
