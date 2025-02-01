@@ -25,7 +25,7 @@ export class LoginComponent {
         this.authService.saveToken(response.token); 
         // save the user name
         localStorage.setItem('username', this.username);       
-        this.router.navigate(['/hero']); 
+        this.router.navigate(['hero']); 
       },
       error: () => {
         this.errorMessage = 'Invalid username or password';

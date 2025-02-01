@@ -82,11 +82,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let farm of farms" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
-          <td class="py-3 px-4">{{ farm.name }}</td>
-          <td class="py-3 px-4">{{ farm.location }}</td>
-          <td class="py-3 px-4">{{ farm.email }}</td>
-          <td class="py-3 px-4">{{ farm.phone_number }}</td>
+        <tr *ngFor="let farm of farms" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary" (click)="viewFarm(farm.id)">
+            <td class="py-3 px-4">{{ farm.name }}</td>
+            <td class="py-3 px-4">{{ farm.location }}</td>
+            <td class="py-3 px-4">{{ farm.email }}</td>
+            <td class="py-3 px-4">{{ farm.phone_number }}</td>         
         </tr>
       </tbody>
     </table>

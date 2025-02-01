@@ -19,21 +19,27 @@ export class FarmDashboardComponent implements OnInit {
   newFarmPhone = '';
   addingError: { [key: string]: string[] } = {}; // ✅ Proper error type
 
-  constructor(private farmsService: FarmsService) {}
-
+  constructor(private farmsService: FarmsService, private router: Router) {}
   ngOnInit() {
     this.loadFarms();
+
   }
 
   loadFarms() {
     this.farmsService.getFarms().subscribe({
       next: (data) => {
         this.farms = data;
+        console.log('Farms:', data);
       },
       error: (error) => {
         console.error('Error fetching farms:', error);
       }
     });
+  }
+  viewFarm(farmId: any) {
+    console.log('View farm:', farmId);
+    // route to farm view
+    this.router.navigate(['/farms', farmId, 'view']);
   }
   addFarm() {
     this.addingError = {}; // ✅ Reset errors before submitting
@@ -54,7 +60,7 @@ export class FarmDashboardComponent implements OnInit {
         this.newFarmLocation = '';
         this.newFarmEmail = '';
         this.newFarmPhone = '';
-        
+
       },
       error: (error) => {
         this.addingError = error.error;

@@ -30,6 +30,6 @@ export class TopnavComponent {
     console.log('User signed out');
     localStorage.removeItem('auth-token');
     //redirect to login page
-    window.location.href = '/hero';
+    window.location.href = 'hero';
   }
 }
