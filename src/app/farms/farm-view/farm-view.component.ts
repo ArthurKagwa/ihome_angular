@@ -33,7 +33,6 @@ goBack() {
     this.farmId = this.route.snapshot.paramMap.get('farmId');
     console.log('Farm ID:', this.farmId);
     //store farmId in local storage
-    localStorage.setItem('farmId', this.farmId as string);
 
     // Fetch farm details if farmId is available
     if (this.farmId) {
