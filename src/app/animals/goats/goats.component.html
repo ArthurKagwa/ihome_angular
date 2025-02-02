@@ -1,0 +1,68 @@
+<h1>add goat</h1>
+
+<form #goatForm="ngForm" (ngSubmit)="onSubmit(goatForm)">
+    <div>
+      <label for="id">goat ID:</label>
+      <input type="text" id="id" name="id" ngModel required>
+    </div>
+
+    <!-- DOB -->
+    <div>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" ngModel required >
+    </div>
+
+    <!-- sex -->
+    <div>
+        <label for="sex">Sex</label>
+        <select type="text" id="sex" name="sex" ngModel required>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select>
+    </div>
+
+    <!-- breed -->
+
+    <div >
+      <label for="breed">Breed:</label>
+      <select name="breed" id="breed" ngModel required>
+        //iterate over breeds
+        <option *ngFor="let breed of breeds" [value]="breed.id">{{breed.breed_name}}</option>
+      </select>
+    </div>
+
+    
+
+
+    <!-- dropdown with search for father -->
+    <div>
+      <label for="father">Father:</label>
+        <select id="father" name="father" ngModel >
+            <option *ngFor="let father of fathers" [value]="father.goatId">{{father.goatId}}</option>
+        </select>
+        <!-- error message -->
+        <div *ngIf="goatForm.controls['father'].invalid && goatForm.controls['father'].touched">
+            <p>please select a father</p>
+        </div>
+    </div>
+    <!-- dropdown with search for mother -->
+    <div>
+      <label for="mother">Mother:</label>
+        <select id="mother" name="mother" ngModel >
+            <option *ngFor="let mother of mothers" [value]="mother.goatId">{{mother.goatId}}</option>
+        </select>
+        <!-- error message -->
+        <div *ngIf="goatForm.controls['mother'].invalid && goatForm.controls['mother'].touched">
+            <p>please select a mother</p>
+        </div>
+    </div>
+
+    <!-- tag_color -->
+    <div>
+      <label for="tag_color">Tag Color:</label>
+      <input type="text" id="tag_color" name="tag_color" ngModel required>
+    </div>
+      
+    <!-- submit button -->                                                  ,
+    <button type="submit" [disabled]="goatForm.invalid">Submit</button>
+  </form>
