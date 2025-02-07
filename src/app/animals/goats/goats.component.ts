@@ -15,6 +15,9 @@ import { TypeService } from '../../services/type.service';
   imports: [CommonModule, FormsModule]
 })
 export class GoatsComponent implements OnInit {
+getBreedName(gbreed: any) {
+  return this.breeds.find((breed : any) => breed.id === gbreed)?.breed_name
+}
  
   
   goats: any;
