@@ -8,28 +8,28 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#3A7D44', // Primary Green
-          light: '#7BBF6A', // Light Green
-          dark: '#265D30', // Dark Green
+          DEFAULT: '#1F2937', // Dark Slate (Professional & Readable)
+          light: '#374151', // Medium Grayish Blue (Modern)
+          dark: '#111827', // Deep Graphite (Elegant Contrast)
         },
         secondary: {
-          DEFAULT: '#6E4B3E', // Primary Brown
-          light: '#A98266', // Light Brown
-          dark: '#4B3027', // Dark Brown
+          DEFAULT: '#F3F4F6', // Light Cool Gray (Clean & Minimal)
+          light: '#E5E7EB', // Soft Gray (Subtle Contrast)
+          dark: '#9CA3AF', // Muted Gray (Neutral)
         },
         accent: {
-          yellow: '#D9A74F', // Golden Yellow
-          orange: '#E17F45', // Warm Orange
-          blue: '#A4DDED', // Light Sky Blue
+          gold: '#C7A252', // Elegant Gold (Luxury)
+          emerald: '#3B7D5B', // Rich Emerald (Fresh & Modern)
+          crimson: '#A42C27', // Deep Crimson (Strong, High Contrast)
         },
         neutral: {
-          cream: '#F5F1E6', // Cream
-          charcoal: '#333533', // Deep Charcoal
-          white: '#FAF9F6', // Off-White
+          white: '#FFFFFF', // Pure White (Maximum Readability)
+          light: '#F9FAFB', // Very Light Gray (Soft & Clean)
+          dark: '#1F2937', // Slate Gray (Strong Readability)
+          black: '#0A0A0A', // Deep Black (Bold Contrast)
         },
       },
     },
   },  
   plugins: [],
 }
-

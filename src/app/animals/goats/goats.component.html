@@ -1,154 +1,185 @@
-<h1>breeds</h1>
-<form #breedForm="ngForm" (ngSubmit)="onSubmitB(breedForm)">
- 
-  <div>
-    <label for="breed_name">breed name:</label>
-    <input type="text" id="breed_name" name="breed_name" ngModel required>
-  </div>
-  <div>
-    <label for="breed_origin">origin:</label>
-    <input type="text" id="breed_origin" name="breed_origin" ngModel required>
-  </div>
-  <div>
-    <label for="breed_description">description:</label>
-    <input type="text" id="breed_description" name="breed_description" ngModel required>
-  </div>
-  <button type="submit" [disabled]="breedForm.invalid">Submit</button>
-</form>
-<table>
-  <thead>
-    <tr>
-      <th>breed ID</th>
-      <th>breed name</th>
-      <th>origin</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let breed of breeds">
-      <td>{{breed.id}}</td>
-      <td>{{breed.breed_name}}</td>
-      <td>{{breed.origin}}</td>
-    </tr>
-  </tbody>
-</table>
-<h1>add goat</h1>
+<div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <!-- Title -->
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Manage Breeds & Goats</h2>
 
-<form #goatForm="ngForm" (ngSubmit)="onSubmit(goatForm)">
+  <!-- Buttons to Show Forms -->
+  <div class="flex space-x-4">
+    <button (click)="toggleBreedForm()" class="bg-primary text-white px-4 py-2 rounded-md shadow-md hover:bg-primary-dark transition-all">
+      {{ showBreedForm ? 'Hide' : 'Add Breed' }}
+    </button>
+    <button (click)="toggleGoatForm()" class="bg-primary text-white px-4 py-2 rounded-md shadow-md hover:bg-primary-dark transition-all">
+      {{ showGoatForm ? 'Hide' : 'Add Goat' }}
+    </button>
+  </div>
+</div>
+
+<!-- Add Breed Form (Shown Only When `showBreedForm` is True) -->
+<div *ngIf="showBreedForm" class="max-w-4xl mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Add a Breed</h2>
+
+  <form #breedForm="ngForm" (ngSubmit)="onSubmitB(breedForm)" class="space-y-4">
     <div>
-      <label for="id">goat ID:</label>
-      <input type="text" id="id" name="id" ngModel required>
+      <label for="breed_name" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Breed Name:</label>
+      <input type="text" id="breed_name" name="breed_name" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
     </div>
 
-    <!-- DOB -->
     <div>
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob" ngModel required >
+      <label for="breed_origin" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Origin:</label>
+      <input type="text" id="breed_origin" name="breed_origin" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
     </div>
 
-
-    <!-- sex -->
     <div>
-        <label for="sex">Sex</label>
-        <select type="text" id="sex" name="sex" ngModel required>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-        </select>
+      <label for="breed_description" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Description:</label>
+      <input type="text" id="breed_description" name="breed_description" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
     </div>
 
-    <!-- breed -->
+    <button type="submit" [disabled]="breedForm.invalid"
+      class="w-full bg-primary text-white p-2 rounded-md shadow-md hover:bg-primary-dark transition-all">
+      Submit
+    </button>
+  </form>
+</div>
 
-    <div >
-      <label for="breed">Breed:</label>
-      <select name="breed" id="breed" ngModel required>
-        //iterate over breeds
-        <option *ngFor="let breed of breeds" [value]="breed.id">{{breed.breed_name}}</option>
+
+<!-- Add Goat Form (Shown Only When `showGoatForm` is True) -->
+<div *ngIf="showGoatForm" class="max-w-4xl mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Add a Goat</h2>
+
+  <form #goatForm="ngForm" (ngSubmit)="onSubmit(goatForm)" class="space-y-4">
+    <div>
+      <label for="id" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Goat ID:</label>
+      <input type="text" id="id" name="id" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
+    </div>
+
+    <div>
+      <label for="dob" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
+    </div>
+
+    <!-- Sex Selection -->
+    <div>
+      <label for="sex" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Sex:</label>
+      <select id="sex" name="sex" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
       </select>
     </div>
 
-    
-
-<!-- Father Dropdown with Search -->
-<div>
-    <label for="father">Father:</label>
-    <!-- Search Input for Father -->
-    <input
-      type="text"
-      name="er"
-      placeholder="Search father..."
-      [(ngModel)]="fatherSearchText"
-      (input)="filterFathers()"
-      class="w-full p-2 border border-gray-300 rounded-md mb-2"
-    />
-    <!-- Father Dropdown -->
-    <select
-      id="father"
-      name="father"
-      ngModel
-      class="w-full p-2 border border-gray-300 rounded-md"
-    >
-      <option *ngFor="let father of filteredFathers" [value]="father.id">
-        {{ father.id }}
-      </option>
-    </select>
-   
-  </div>
-  
-  <!-- Mother Dropdown with Search -->
-  <div>
-    <label for="mother">Mother:</label>
-    <!-- Search Input for Mother -->
-    <input
-      type="text"
-      placeholder="Search mother..."
-      [(ngModel)]="motherSearchText"
-      (input)="filterMothers()"
-      name="d"
-      class="w-full p-2 border border-gray-300 rounded-md mb-2"
-    />
-    <!-- Mother Dropdown -->
-    <select
-      id="mother"
-      name="mother"
-      ngModel
-      class="w-full p-2 border border-gray-300 rounded-md"
-    >
-      <option *ngFor="let mother of filteredMothers" [value]="mother.id">
-        {{ mother.id }}
-      </option>
-    </select>
-    
-  </div>
-
-    <!-- tag_color -->
+    <!-- Breed Selection -->
     <div>
-      <label for="tag_color">Tag Color:</label>
-      <input type="text" id="tag_color" name="tag_color" ngModel required>
+      <label for="breed" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Breed:</label>
+      <select id="breed" name="breed" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+        <option *ngFor="let breed of breeds" [value]="breed.id">{{ breed.breed_name }}</option>
+      </select>
     </div>
-      
-    <!-- submit button -->                                                  ,
-    <button type="submit" [disabled]="goatForm.invalid">Submit</button>
-  </form>
 
-  <div>
-    <h1>Goats</h1>
-    <table>
-      <thead>
+    <!-- Father Selection with Search -->
+    <div>
+      <label for="father" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Father:</label>
+      <input type="text" placeholder="Search father..." [(ngModel)]="fatherSearchText" (input)="filterFathers()" name="fatherSearch"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
+      <select id="father" name="father" ngModel
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+        <option *ngFor="let father of filteredFathers" [value]="father.id">{{ father.id }}</option>
+      </select>
+    </div>
+
+    <!-- Mother Selection with Search -->
+    <div>
+      <label for="mother" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Mother:</label>
+      <input type="text" placeholder="Search mother..." [(ngModel)]="motherSearchText" (input)="filterMothers()" name="motherSearch"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
+      <select id="mother" name="mother" ngModel
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+        <option *ngFor="let mother of filteredMothers" [value]="mother.id">{{ mother.id }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="tag_color" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Tag Color:</label>
+      <input type="text" id="tag_color" name="tag_color" ngModel required
+        class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
+    </div>
+
+    <button type="submit" [disabled]="goatForm.invalid"
+      class="w-full bg-primary text-white p-2 rounded-md shadow-md hover:bg-primary-dark transition-all dark:bg-primary-light dark:hover:bg-primary-dark">
+      Submit
+    </button>
+  </form>
+</div>
+
+<!-- Breeds Table -->
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Breeds List</h2>
+  <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
+    <thead class="bg-primary text-white dark:bg-primary-dark">
+      <tr>
+        <th class="py-3 px-4 text-left">Breed ID</th>
+        <th class="py-3 px-4 text-left">Breed Name</th>
+        <th class="py-3 px-4 text-left">Origin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let breed of breeds" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
+        <td class="py-3 px-4">{{ breed.id }}</td>
+        <td class="py-3 px-4">{{ breed.breed_name }}</td>
+        <td class="py-3 px-4">{{ breed.breed_origin }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <!-- Title -->
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Goat List</h2>
+
+  <!-- Goats Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
+      <!-- Table Header -->
+      <thead class="bg-primary text-white dark:bg-primary-dark">
         <tr>
-          <th>Goat ID</th>
-          <th>Date of Birth</th>
-          <th>tag color</th>
-          <th>mother</th>
-          <th>father</th>
+          <th class="py-3 px-4 text-left">Goat ID</th>
+          <th class="py-3 px-4 text-left">Date of Birth</th>
+          <th class="py-3 px-4 text-left">Tag Color</th>
+          <th class="py-3 px-4 text-left">Mother</th>
+          <th class="py-3 px-4 text-left">Father</th>
+          <th class="py-3 px-4 text-left">Breed</th>
+          <th class="py-3 px-4 text-left">Actions</th>
         </tr>
       </thead>
+      
+      <!-- Table Body -->
       <tbody>
-        <tr *ngFor="let goat of goats">
-          <td>{{goat.id}}</td>
-          <td>{{goat.dob}}</td>
-          <td>{{goat.tag_color}}</td>
-          <td>{{goat.mother}}</td>
-          <td>{{goat.father}}</td>
+        <tr *ngFor="let goat of goats" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
+          <td class="py-3 px-4">{{ goat.id }}</td>
+          <td class="py-3 px-4">{{ goat.dob }}</td>
+          <td class="py-3 px-4">
+            <span class="inline-block w-5 h-5 rounded-full border border-gray-400" [style.backgroundColor]="goat.tag_color"></span>
+            {{ goat.tag_color }}
+          </td>
+          <td class="py-3 px-4">{{ goat.mother }}</td>
+          <td class="py-3 px-4">{{ goat.father }}</td>
+          <td class="py-3 px-4">{{ goat.breed }}</td>
+
+          <!-- Actions -->
+          <td class="py-3 px-4">
+            <button (click)="editGoat(goat)" class="text-blue-600 hover:underline dark:text-blue-400 mr-2">
+              Edit
+            </button>
+            <button (click)="deleteGoat(goat.id)" class="text-red-600 hover:underline dark:text-red-400">
+              Delete
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>

@@ -27,6 +27,16 @@ export class GoatsComponent implements OnInit {
   filteredMothers: any[]=[];
   fatherSearchText: any;
   motherSearchText: any;
+  showBreedForm = false;
+  showGoatForm = false;
+
+  toggleBreedForm() {
+    this.showBreedForm = !this.showBreedForm;
+  }
+
+  toggleGoatForm() {
+    this.showGoatForm = !this.showGoatForm;
+  }
 
   constructor(private animalService: AnimalService, private breedService: BreedService, private route: ActivatedRoute, private typeService: TypeService) {
   
@@ -148,6 +158,14 @@ fetchFathers(goats: any) {
       mother.id.includes(this.motherSearchText.toLowerCase())
     );
   }
+  editGoat(goat: any) {
+    console.log('Editing goat:', goat);
+    // Implement edit functionality (e.g., open modal for editing)
+  }
 
+  deleteGoat(id: string) {
+    console.log('Deleting goat:', id);
+    // Implement delete functionality (e.g., open modal for confirmation)
+  }
 
 }
