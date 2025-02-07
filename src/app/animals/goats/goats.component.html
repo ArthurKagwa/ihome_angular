@@ -1,3 +1,36 @@
+<h1>breeds</h1>
+<form #breedForm="ngForm" (ngSubmit)="onSubmitB(breedForm)">
+ 
+  <div>
+    <label for="breed_name">breed name:</label>
+    <input type="text" id="breed_name" name="breed_name" ngModel required>
+  </div>
+  <div>
+    <label for="breed_origin">origin:</label>
+    <input type="text" id="breed_origin" name="breed_origin" ngModel required>
+  </div>
+  <div>
+    <label for="breed_description">description:</label>
+    <input type="text" id="breed_description" name="breed_description" ngModel required>
+  </div>
+  <button type="submit" [disabled]="breedForm.invalid">Submit</button>
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>breed ID</th>
+      <th>breed name</th>
+      <th>origin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let breed of breeds">
+      <td>{{breed.id}}</td>
+      <td>{{breed.breed_name}}</td>
+      <td>{{breed.origin}}</td>
+    </tr>
+  </tbody>
+</table>
 <h1>add goat</h1>
 
 <form #goatForm="ngForm" (ngSubmit)="onSubmit(goatForm)">
@@ -11,6 +44,7 @@
       <label for="dob">Date of Birth:</label>
       <input type="date" id="dob" name="dob" ngModel required >
     </div>
+
 
     <!-- sex -->
     <div>
@@ -33,29 +67,57 @@
 
     
 
-
-    <!-- dropdown with search for father -->
-    <div>
-      <label for="father">Father:</label>
-        <select id="father" name="father" ngModel >
-            <option *ngFor="let father of fathers" [value]="father.goatId">{{father.goatId}}</option>
-        </select>
-        <!-- error message -->
-        <div *ngIf="goatForm.controls['father'].invalid && goatForm.controls['father'].touched">
-            <p>please select a father</p>
-        </div>
-    </div>
-    <!-- dropdown with search for mother -->
-    <div>
-      <label for="mother">Mother:</label>
-        <select id="mother" name="mother" ngModel >
-            <option *ngFor="let mother of mothers" [value]="mother.goatId">{{mother.goatId}}</option>
-        </select>
-        <!-- error message -->
-        <div *ngIf="goatForm.controls['mother'].invalid && goatForm.controls['mother'].touched">
-            <p>please select a mother</p>
-        </div>
-    </div>
+<!-- Father Dropdown with Search -->
+<div>
+    <label for="father">Father:</label>
+    <!-- Search Input for Father -->
+    <input
+      type="text"
+      name="er"
+      placeholder="Search father..."
+      [(ngModel)]="fatherSearchText"
+      (input)="filterFathers()"
+      class="w-full p-2 border border-gray-300 rounded-md mb-2"
+    />
+    <!-- Father Dropdown -->
+    <select
+      id="father"
+      name="father"
+      ngModel
+      class="w-full p-2 border border-gray-300 rounded-md"
+    >
+      <option *ngFor="let father of filteredFathers" [value]="father.id">
+        {{ father.id }}
+      </option>
+    </select>
+   
+  </div>
+  
+  <!-- Mother Dropdown with Search -->
+  <div>
+    <label for="mother">Mother:</label>
+    <!-- Search Input for Mother -->
+    <input
+      type="text"
+      placeholder="Search mother..."
+      [(ngModel)]="motherSearchText"
+      (input)="filterMothers()"
+      name="d"
+      class="w-full p-2 border border-gray-300 rounded-md mb-2"
+    />
+    <!-- Mother Dropdown -->
+    <select
+      id="mother"
+      name="mother"
+      ngModel
+      class="w-full p-2 border border-gray-300 rounded-md"
+    >
+      <option *ngFor="let mother of filteredMothers" [value]="mother.id">
+        {{ mother.id }}
+      </option>
+    </select>
+    
+  </div>
 
     <!-- tag_color -->
     <div>
@@ -66,3 +128,27 @@
     <!-- submit button -->                                                  ,
     <button type="submit" [disabled]="goatForm.invalid">Submit</button>
   </form>
+
+  <div>
+    <h1>Goats</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Goat ID</th>
+          <th>Date of Birth</th>
+          <th>tag color</th>
+          <th>mother</th>
+          <th>father</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let goat of goats">
+          <td>{{goat.id}}</td>
+          <td>{{goat.dob}}</td>
+          <td>{{goat.tag_color}}</td>
+          <td>{{goat.mother}}</td>
+          <td>{{goat.father}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

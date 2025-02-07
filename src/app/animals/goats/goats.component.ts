@@ -15,27 +15,7 @@ import { TypeService } from '../../services/type.service';
   imports: [CommonModule, FormsModule]
 })
 export class GoatsComponent implements OnInit {
-  onSubmit(goatForm: NgForm) {
-    if (goatForm.valid) {
-      const formData = goatForm.value;
-      this.addAnimal(formData);
-    } else {
-      console.log('Form is invalid');
-    }
-  }
-  addAnimal(formData: any) {
-    this.animalService.addAnimal(formData).subscribe({
-      next: (data) => {
-        console.log('Animal added:', data);
-        this.fetchGoats();
-      },
-      error: (error) => {
-        console.error('Error adding animal:', error);
-      },
-    }); 
-    
-  }
-
+ 
   
   goats: any;
   farm: any;
@@ -43,6 +23,10 @@ export class GoatsComponent implements OnInit {
   mothers: any;
   fathers: any;
   breeds: any;
+  filteredFathers: any[]=[];
+  filteredMothers: any[]=[];
+  fatherSearchText: any;
+  motherSearchText: any;
 
   constructor(private animalService: AnimalService, private breedService: BreedService, private route: ActivatedRoute, private typeService: TypeService) {
   
@@ -51,17 +35,6 @@ export class GoatsComponent implements OnInit {
   ngOnInit(): void {
     console.log('GoatsComponent initialized');
     this.farm = this.route.snapshot.paramMap.get('farmId');
-    this.types= this.typeService.getTypes().subscribe({
-      next: (data) => {
-        this.types = data;
-        console.log('Types:', data);
-      },
-      error: (error) => {
-        console.error('Error fetching types:', error);
-      },
-    });
-    console.log('Types:', this.types);
-
     this.fetchGoats();
     this.fetchBreeds();
   }
@@ -79,26 +52,102 @@ export class GoatsComponent implements OnInit {
   }
 
   fetchGoats() {
-    console.log('farm:',this.farm);
     this.animalService.getAnimalsByType('goat',this.farm).subscribe({
       next: (data) => {
         this.goats = data;
+        console.log('fetching goats');
         console.log('Goats:', this.goats);
+        this.fetchFathers(this.goats);
+        this.fetchMothers(this.goats);
+        this.filteredFathers= this.fathers;
+        this.filteredMothers= this.mothers;
       },
       error: (error) => {
         console.error('Error fetching goats:', error);
     }
-  });
+
+    });
+    console.log('Goats:', this.goats);
 
 
-}
+  }
 fetchFathers(goats: any) {
   //pick males
   //gender ='M'
-  this.fathers = goats.filter((goat: any) => goat.gender === 'M'|| 'm'|| 'male');
+  console.log('Goats:', goats);
+  this.fathers = goats.filter((goat: any) => goat.sex === 'M');
+  console.log('Fathers:', this.fathers);
   }
   fetchMothers(goats: any) {
     // pick females gender ='F'
-    this.mothers = goats.filter((goat:any) => goat.gender === 'F'|| 'f'|| 'female');
+    this.mothers = goats.filter((goat:any) => goat.sex === 'F');
+    console.log('Mothers:', this.mothers);
   }
+
+  //handle breed form
+  onSubmitB(breedForm: NgForm){
+    if (breedForm.valid){
+      const formData = breedForm.value;
+      formData.animal_type = 'goat';  
+      formData.farm = this.farm;
+      this.addBreed(formData);
+
+
+    }else{
+      console.log('Form is invalid');
+
+    }
+    breedForm.reset();
+
+  }
+  addBreed(formData: any) {
+    this.breedService.addBreed(formData).subscribe({
+      next: (data) => {
+        console.log('Breed added:', data);
+        this.fetchBreeds();
+      },
+      error: (error) => {
+        console.error('Error adding breed:', error);
+      },
+    });
+
+    }
+  onSubmit(goatForm: NgForm) {
+    if (goatForm.valid) {
+      const formData = goatForm.value;
+      formData.type = 'goat';  
+      formData.farm = this.farm;
+
+      this.addAnimal(formData);
+
+    } else {
+      console.log('Form is invalid');
+    }
+    goatForm.reset();
+  }
+  addAnimal(formData: any) {
+    this.animalService.addAnimal(formData).subscribe({
+      next: (data) => {
+        console.log('Animal added:', data);
+        this.fetchGoats();
+      },
+      error: (error) => {
+        console.error('Error adding animal:', error);
+      },
+    }); 
+
+  }
+  filterFathers(): void {
+    console.log('filter');
+    this.filteredFathers = this.fathers.filter((father:any) =>
+      father.id.includes(this.fatherSearchText.toLowerCase())
+    );
+  }
+  filterMothers(): void {
+    this.filteredMothers = this.mothers.filter((mother:any) =>
+      mother.id.includes(this.motherSearchText.toLowerCase())
+    );
+  }
+
+
 }

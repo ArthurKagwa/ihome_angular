@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,10 +22,8 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (response: any) => {
-        this.authService.saveToken(response.token); 
-        // save the user name
-        localStorage.setItem('username', this.username);       
-        this.router.navigate(['hero']); 
+        this.authService.saveToken(response.token);
+        this.router.navigate(['/hero']); 
       },
       error: () => {
         this.errorMessage = 'Invalid username or password';
