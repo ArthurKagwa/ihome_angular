@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -47,10 +47,10 @@ export class SignupComponent {
     this.authService.signup(data).subscribe({
       next: (response: any) => {
         console.log('Signup successful', response);
-        this.authService.saveToken(response.token); // Save the token
+        this.authService.saveToken(response.token,1); // Save the token
         this.router.navigate(['/hero']); // Redirect to the dashboard
       },
-      error: (error) => {
+      error: (error:any) => {
         console.error('Signup failed', error);
         this.errorMessage = 'Signup failed. Please try again.'; // Display error message
       },

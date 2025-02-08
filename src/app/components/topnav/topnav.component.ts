@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-topnav',
@@ -9,12 +9,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './topnav.component.css'
 })
 export class TopnavComponent {
-  isAuthenticated = false; // Set to `true` if the user is authenticated
+  constructor(private authService: AuthService) {
+    this.isAuth = this.isAuthenticated();
+
+  }
+  token: any;
+  isAuth: boolean ;
+
   ngOnInit(): void {
     console.log('TopnavComponent initialized');
-    const token = localStorage.getItem('auth-token');
-    this.isAuthenticated = !!token;
-    console.log('Is authenticated:', this.isAuthenticated);
   }
   isMobileMenuOpen = false; // For toggling the mobile menu
 
@@ -23,13 +26,14 @@ export class TopnavComponent {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
+  //is Authenticated
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
   // Handle sign out
   signOut(): void {
-    // Simulate sign-out logic
-    this.isAuthenticated = false;
-    console.log('User signed out');
-    localStorage.removeItem('auth-token');
-    //redirect to login page
-    window.location.href = 'hero';
+    this.authService.logout();
+    
   }
 }

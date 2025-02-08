@@ -1,48 +1,54 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:8000'; // Replace with your Django backend URL
-  private tokenKey = 'auth-token';
+  private apiUrl = 'https://your-auth-server.com';
+  private refreshTokenUrl = `${this.apiUrl}/refresh-token`;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  // Login method
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login/`, credentials);
+
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!refreshToken) {
+      return throwError('No refresh token available');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(this.refreshTokenUrl, { refreshToken }, { headers }).pipe(
+      catchError(error => {
+        console.error('Error refreshing token:', error);
+        return throwError(error);
+      })
+    );
   }
 
-  // Signup method
-  signup(data: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signup/`, data);
-  }
-
-  // Save token
-  saveToken(token: string) {
-   
-    localStorage.setItem(this.tokenKey, token);
-
-  }
-
-  // Get token
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-
-  // Check if user is authenticated
-  isAuthenticated(): boolean {
-    return !!this.getToken();
-  }
-
-  // Logout
-  logout() {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
+  // Method to handle API calls with token refresh logic
+  makeAuthenticatedRequest<T>(request: () => Observable<T>): Observable<T> {
+    return request().pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          // Token expired, try to refresh
+          return this.refreshToken().pipe(
+            switchMap((response: any) => {
+              localStorage.setItem('accessToken', response.accessToken);
+              localStorage.setItem('refreshToken', response.refreshToken);
+              // Retry the original request with the new token
+              return request();
+            })
+          );
+        } else {
+          return throwError(error);
+        }
+      })
+    );
   }
 }

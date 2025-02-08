@@ -22,7 +22,8 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (response: any) => {
-        this.authService.saveToken(response.token);
+        this.authService.saveToken(response.token, response.expiresIn);
+        console.log(response);
         this.router.navigate(['/hero']); 
       },
       error: () => {

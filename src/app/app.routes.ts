@@ -11,20 +11,21 @@ import { FarmMedicationComponent } from './farms/farm-medication/farm-medication
 import { FarmViewComponent } from './farms/farm-view/farm-view.component';
 // import { AnimalComponent } from './animals/animal/animal.component';
 import { GoatsComponent } from './animals/goats/goats.component';
+import { AuthGuard } from './auth.guard';
 
 
 export const routes: Routes = [
-    { path: 'hero', component: HeroComponent },
+    { path: 'hero', component: HeroComponent,canActivate: [AuthGuard] },
     { path: 'signup', component: SignupComponent },
-    // { path: '**', redirectTo: 'hero' },
-    { path: 'login', component: LoginComponent },
-    { path: 'farms', component: FarmDashboardComponent },
-    { path: 'farms/:farmId/animals', component: FarmAnimalsComponent },
-    { path: 'farms/:farmId/events', component: FarmEventsComponent },
-    { path: 'farms/:farmId/tasks', component: FarmTasksComponent },
-    { path: 'farms/:farmId/staff', component: FarmStaffComponent },
-    { path: 'farms/:farmId/medication', component: FarmMedicationComponent },
-    { path: 'farms/:farmId/view', component: FarmViewComponent },
+    // { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent }   ,
+    { path: 'farms', component: FarmDashboardComponent,canActivate: [AuthGuard] },
+    { path: 'farms/:farmId/animals', component: FarmAnimalsComponent ,canActivate: [AuthGuard]},
+    { path: 'farms/:farmId/events', component: FarmEventsComponent ,canActivate: [AuthGuard]},
+    { path: 'farms/:farmId/tasks', component: FarmTasksComponent ,canActivate: [AuthGuard]},
+    { path: 'farms/:farmId/staff', component: FarmStaffComponent,canActivate: [AuthGuard] },
+    { path: 'farms/:farmId/medication', component: FarmMedicationComponent ,canActivate: [AuthGuard]},
+    { path: 'farms/:farmId/view', component: FarmViewComponent ,canActivate: [AuthGuard]},
     // { path: 'animals/:farmId' ,component: AnimalComponent},
-    { path: 'animals/goats/:farmId', component: GoatsComponent }
+    { path: 'animals/goats/:farmId', component: GoatsComponent ,canActivate: [AuthGuard]}
 ];
