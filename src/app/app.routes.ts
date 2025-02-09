@@ -21,7 +21,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent }   ,
     { path: 'farms', component: FarmDashboardComponent,canActivate: [AuthGuard] },
     { path: 'farms/:farmId/animals', component: FarmAnimalsComponent ,canActivate: [AuthGuard]},
-    { path: 'farms/:farmId/events', component: FarmEventsComponent ,canActivate: [AuthGuard]},
+    { path: 'farms/:farmId/events', component: FarmEventsComponent,canActivate: [AuthGuard] },
     { path: 'farms/:farmId/tasks', component: FarmTasksComponent ,canActivate: [AuthGuard]},
     { path: 'farms/:farmId/staff', component: FarmStaffComponent,canActivate: [AuthGuard] },
     { path: 'farms/:farmId/medication', component: FarmMedicationComponent ,canActivate: [AuthGuard]},

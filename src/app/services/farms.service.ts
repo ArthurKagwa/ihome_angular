@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +9,16 @@ import { Observable, throwError } from 'rxjs';
 export class FarmsService {
   private baseUrl = 'http://127.0.0.1:8000/farm/api/farms/'; // Django API endpoint
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService  ) {}
 
-  // Get the authentication token from local storage
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth-token');
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Token ${token}`,
-    });
+    const token = this.authService.getToken(); 
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+      return headers;
   }
 
   //errors

@@ -2,22 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
   baseUrl = 'http://localhost:8000/farm/api/animals/';
 
-  getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('auth-token');
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Token ${token}`
-    });
-
+  
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken(); 
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+      return headers;
   }
 
   getAnimalsByType(type: any,farm: any): Observable<any> {

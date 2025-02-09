@@ -1,108 +1,72 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:8000/'; // Replace with your Django backend URL
-  private tokenKey = 'auth-token';
-  private refreshTokenKey = 'refresh-token';
+  private apiUrl = 'http://127.0.0.1:8000/token/';
+  private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Login method
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}token/`, credentials).pipe(
+  login(username: string, password: string): Observable<any> {
+    const body = { username, password };
+  
+    return this.http.post(this.apiUrl, body).pipe(
       tap((response: any) => {
-        this.saveToken(response.access, response.expiresIn);
-        this.saveRefreshToken(response.refresh);
+        // Assuming the response contains 'access' and 'refresh' tokens
+        if (response.access) {
+          this.saveToken(response.access,response.refresh);  // Store the access token
+        }
+      }),
+      catchError((error) => {
+        // Handle login errors
+        let errorMessage = 'Login failed. Please try again.';
+        if (error.error && error.error.detail) {
+          errorMessage = error.error.detail;  // Use the error message from the backend
+        }
+        return throwError(() => new Error(errorMessage));
       })
     );
   }
-  
-
-  // Signup method
-  signup(data: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}signup/`, data);
+  saveToken(token: string, refreshToken: string): void {
+    console.log('Token:', token);
+    localStorage.setItem('access_token', token);
+    localStorage.setItem('refresh_token', refreshToken);
   }
 
-  // Save token
-  saveToken(token: string, expiresIn: number) {
-    const expirationTime = new Date().getTime() + expiresIn * 1000; // Convert seconds to milliseconds
-    localStorage.setItem(this.tokenKey, token);
-    localStorage.setItem('tokenExpiration', expirationTime.toString());
-  
-    this.autoLogout(expiresIn * 1000); // Auto logout when token expires
-  }
-  
-  // Save refresh token
-  saveRefreshToken(refreshToken: string) {
-    localStorage.setItem(this.refreshTokenKey, refreshToken);
-  }
-
-  // Get refresh token
-  getRefreshToken(): string | null {
-    return localStorage.getItem(this.refreshTokenKey);
-  }
-
-  // Refresh token method
-  refreshToken(): Observable<any> {
-    const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
-      this.logout();
-      return new Observable(observer => {
-        observer.error('No refresh token available');
-      });
-    }
-
-    return this.http.post(`${this.baseUrl}token/refresh/`, { refresh: refreshToken }).pipe(
-      tap((response: any) => {
-        this.saveToken(response.access, response.expiresIn);
-      })
-    );
-  }
-
-  // Get token
   getToken(): string | null {
-    const token = localStorage.getItem(this.tokenKey);
-    const expiration = localStorage.getItem('tokenExpiration');
-  
-    if (!token || !expiration || new Date().getTime() > Number(expiration)) {
-      
+    return localStorage.getItem('access_token');
+  }
 
-      this.logout();
-      return null;
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    this.router.navigate(['/login']);
+  }
+
+  refreshToken(): void {
+    const refresh_token = localStorage.getItem('refresh_token');
+    if (refresh_token) {
+      this.http.post('http://127.0.0.1:8000/token/refresh/', { refresh: refresh_token })
+        .subscribe((res: any) => {
+          this.saveToken(res.access, res.refresh);
+        });
     }
-    return token;
-  }
-  
-
-  // Is authenticated
-  isAuthenticated(): boolean {
-    return this.getToken() !== null;
-
   }
 
-  // Logout
-  logout() {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem('tokenExpiration');
-    localStorage.removeItem(this.refreshTokenKey);
-    localStorage.removeItem('isAuthenticated');
-    this.router.navigate(['/hero']);
-  }
-  
-  autoLogout(expirationDuration: number) {
-    setTimeout(() => {
-     
-      this.logout();
-    }, expirationDuration);
+  // signup
+  signup(data:any): Observable<any> {
+    return this.http.post('http://127.0.0.1:8000/signup/', data);
   }
   
 }
-
-

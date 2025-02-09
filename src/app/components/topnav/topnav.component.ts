@@ -28,7 +28,7 @@ export class TopnavComponent {
 
   //is Authenticated
   isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
+    return this.authService.isLoggedIn();
   }
 
   // Handle sign out

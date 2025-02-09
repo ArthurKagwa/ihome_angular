@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreedService {
   baseUrl = 'http://localhost:8000/farm/api/breeds/';
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private authService:AuthService) { }
 
-  getAuthHeaders() {
-    const token = localStorage.getItem('auth-token');
-    return {
-      'Content-Type': 'application/json',
-      Authorization: `Token ${token}`
-    };
-  }
+  
+    private getAuthHeaders(): HttpHeaders {
+      const token = this.authService.getToken(); 
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+      if (token) {
+        headers = headers.set('Authorization', `Bearer ${token}`);
+      }
+        return headers;
+    }
 
 
   getBreedsByType(type:any): Observable<any> {

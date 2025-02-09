@@ -47,8 +47,7 @@ export class SignupComponent {
     this.authService.signup(data).subscribe({
       next: (response: any) => {
         console.log('Signup successful', response);
-        this.authService.saveToken(response.token,1); // Save the token
-        this.router.navigate(['/hero']); // Redirect to the dashboard
+        this.router.navigate(['/login']); // Redirect to the dashboard
       },
       error: (error:any) => {
         console.error('Signup failed', error);

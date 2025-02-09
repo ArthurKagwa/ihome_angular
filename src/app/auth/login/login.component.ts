@@ -20,15 +20,13 @@ export class LoginComponent {
   onLogin() {
     const credentials = { username: this.username, password: this.password };
 
-    this.authService.login(credentials).subscribe({
-      next: (response: any) => {
-        this.authService.saveToken(response.token, response.expiresIn);
-        console.log(response);
-        this.router.navigate(['/hero']); 
+    this.authService.login(this.username, this.password).subscribe(
+      (res) => {
+        this.authService.saveToken(res.access, res.refresh);
+        this.router.navigate(['/hero']);
       },
-      error: () => {
-        this.errorMessage = 'Invalid username or password';
-      },
-    });
+      (err) => console.error('Login failed', err)
+
+    );
   }
 }
