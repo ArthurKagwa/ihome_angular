@@ -143,44 +143,45 @@
 
   <!-- Goats Table -->
   <div class="overflow-x-auto">
-    <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
-      <!-- Table Header -->
-      <thead class="bg-primary text-white dark:bg-primary-dark">
-        <tr>
-          <th class="py-3 px-4 text-left">Goat ID</th>
-          <th class="py-3 px-4 text-left">Date of Birth</th>
-          <th class="py-3 px-4 text-left">Tag Color</th>
-          <th class="py-3 px-4 text-left">Mother</th>
-          <th class="py-3 px-4 text-left">Father</th>
-          <th class="py-3 px-4 text-left">Breed</th>
-          <th class="py-3 px-4 text-left">Actions</th>
-        </tr>
-      </thead>
-      
-      <!-- Table Body -->
-      <tbody>
-        <tr *ngFor="let goat of goats" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
-          <td class="py-3 px-4">{{ goat.id }}</td>
-          <td class="py-3 px-4">{{ goat.dob }}</td>
-          <td class="py-3 px-4">
-            <span class="inline-block w-5 h-5 rounded-full border border-gray-400" [style.backgroundColor]="goat.tag_color"></span>
-            {{ goat.tag_color }}
-          </td>
-          <td class="py-3 px-4">{{ goat.mother }}</td>
-          <td class="py-3 px-4">{{ goat.father }}</td>
-          <td class="py-3 px-4">{{ getBreedName(goat.breed) }}</td>
-
-          <!-- Actions -->
-          <td class="py-3 px-4">
-            <button (click)="editGoat(goat)" class="text-blue-600 hover:underline dark:text-blue-400 mr-2">
-              Edit
-            </button>
-            <button (click)="deleteGoat(goat.id)" class="text-red-600 hover:underline dark:text-red-400">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-x-auto">
+      <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
+        <!-- Table Header -->
+        <thead class="bg-primary text-white dark:bg-primary-dark">
+          <tr>
+            <th class="py-3 px-4 text-left">Goat ID</th>
+            <th class="py-3 px-4 text-left">Date of Birth</th>
+            <th class="py-3 px-4 text-left">Tag Color</th>
+            <th class="py-3 px-4 text-left">Mother</th>
+            <th class="py-3 px-4 text-left">Father</th>
+            <th class="py-3 px-4 text-left">Breed</th>
+            <th class="py-3 px-4 text-left">Actions</th>
+          </tr>
+        </thead>
+        
+        <!-- Table Body -->
+        <tbody>
+          <tr *ngFor="let goat of goats" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary" (click)="viewGoat(goat.id)" >
+            <td class="py-3 px-4">{{ goat.id }}</td>
+            <td class="py-3 px-4">{{ goat.dob }}</td>
+            <td class="py-3 px-4">
+              <span class="inline-block w-5 h-5 rounded-full border border-gray-400" [style.backgroundColor]="goat.tag_color"></span>
+              {{ goat.tag_color }}
+            </td>
+            <td class="py-3 px-4">{{ goat.mother }}</td>
+            <td class="py-3 px-4">{{ goat.father }}</td>
+            <td class="py-3 px-4">{{ getBreedName(goat.breed) }}</td>
+  
+            <!-- Actions -->
+            <td class="py-3 px-4">
+              <button (click)="editGoat(goat)" class="text-blue-600 hover:underline dark:text-blue-400 mr-2">
+                Edit
+              </button>
+              <button (click)="deleteGoat(goat.id)" class="text-red-600 hover:underline dark:text-red-400">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>

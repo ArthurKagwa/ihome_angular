@@ -30,6 +30,11 @@ export class BreedService {
     return this.http.get(`${this.baseUrl}by_type_and_farm/?type_id=${type}&farm_id=${farm}`, { headers: this.getAuthHeaders() });
   }
 
+  getBreed(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}${id}/`, { headers: this.getAuthHeaders() });
+    
+  }
+
   addBreed(data: any): Observable<any> {
     return this.http.post(this.baseUrl, data, { headers: this.getAuthHeaders() });
   }

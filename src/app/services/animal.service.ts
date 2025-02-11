@@ -32,6 +32,10 @@ export class AnimalService {
     return this.http.post(this.baseUrl, data, { headers: this.getAuthHeaders() });
   }
 
+  getAnimal(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}${id}/`, { headers: this.getAuthHeaders() });
+  }
+
   
 
 

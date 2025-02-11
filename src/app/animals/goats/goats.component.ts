@@ -5,14 +5,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AnimalService } from '../../services/animal.service';
 import { BreedService } from '../../services/breed.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TypeService } from '../../services/type.service';
 
 @Component({
   selector: 'app-goats',
   templateUrl: './goats.component.html',
   styleUrls: ['./goats.component.css'],
-  imports: [CommonModule, FormsModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule],
 })
 export class GoatsComponent implements OnInit {
 getBreedName(gbreed: any) {
@@ -41,7 +42,7 @@ getBreedName(gbreed: any) {
     this.showGoatForm = !this.showGoatForm;
   }
 
-  constructor(private animalService: AnimalService, private breedService: BreedService, private route: ActivatedRoute, private typeService: TypeService) {
+  constructor(private animalService: AnimalService, private breedService: BreedService, private route: ActivatedRoute, private typeService: TypeService, private router: Router) {
   
   }
 
@@ -169,6 +170,12 @@ fetchFathers(goats: any) {
   deleteGoat(id: string) {
     console.log('Deleting goat:', id);
     // Implement delete functionality (e.g., open modal for confirmation)
+  }
+
+  //view goat
+  viewGoat(goatId: any){
+    console.log('Viewing goat:', goatId);
+    this.router.navigate(['/goat/',goatId]);
   }
 
 }
