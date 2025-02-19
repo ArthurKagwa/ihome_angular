@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { AuthenticatedTopNavComponent } from './components/authenticated-top-nav/authenticated-top-nav.component';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TopnavComponent, HttpClientModule, CommonModule, FormsModule, AuthenticatedTopNavComponent
+  imports: [RouterOutlet, TopnavComponent, HttpClientModule, CommonModule, FormsModule, AuthenticatedTopNavComponent, ChatbotComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

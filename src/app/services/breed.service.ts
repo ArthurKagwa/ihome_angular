@@ -14,7 +14,7 @@ export class BreedService {
     private getAuthHeaders(): HttpHeaders {
       const token = this.authService.getToken(); 
       let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    
+     
       if (token) {
         headers = headers.set('Authorization', `Bearer ${token}`);
       }
