@@ -1,0 +1,170 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+    <h2 class="text-2xl font-semibold text-primary-dark dark:text-neutral-cream mb-4">Goat Details</h2>
+  
+    <!-- Goat Details Section -->
+    <div class="space-y-4">
+      <!-- Goat ID -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Goat ID</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.id }}</p>
+      </div>
+  
+      <!-- Date of Birth -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Date of Birth</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.dob }}</p>
+      </div>
+  
+      <!-- Tag Color -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Tag Color</label>
+        <div class="mt-1 flex items-center">
+          <span
+            class="inline-block w-5 h-5 rounded-full border border-gray-400"
+            [style.backgroundColor]="goat.tag_color"
+          ></span>
+          <p class="ml-2 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.tag_color }}</p>
+        </div>
+      </div>
+  
+      <!-- Mother -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Mother</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.mother || 'Unknown' }}</p>
+      </div>
+  
+      <!-- Father -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Father</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.father || 'Unknown' }}</p>
+      </div>
+  
+      <!-- Breed -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Breed</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ this.breedName }}</p>
+      </div>
+  
+      <!-- Sex -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Sex</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.sex === 'M' ? 'Male' : 'Female' }}</p>
+      </div>
+      
+      <!-- Status -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Status</label>
+        <p class="mt-1 text-lg text-neutral-charcoal dark:text-neutral-cream">{{ goat.status }}</p>
+      </div>
+     
+    
+    <!-- buttons -->
+    <div class="mt-6 flex items-center justify-center gap-4">
+      <button
+        (click)="goBack()"
+        class="bg-primary text-white px-4 py-2 rounded-md shadow-md hover:bg-primary-dark transition-all 
+               dark:bg-primary-light dark:hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      >
+        Back to Goat Listuhd
+      </button>
+      
+      <button
+        (click)="edit()"
+        class="bg-accent-orange text-white px-4 py-2 rounded-md shadow-md hover:bg-accent-orange-dark transition-all 
+               dark:bg-accent-orange dark:hover:bg-accent-orange-dark focus:outline-none focus:ring-2 focus:ring-accent-orange focus:ring-offset-2"
+      >
+        Edit Goat
+      </button>
+    </div>
+
+  </div>
+  
+</div>
+<div *ngIf="showForm===true" class="md:m-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+    <form #goatForm="ngForm" (ngSubmit)="onSubmitEdit(goatForm)" class="space-y-4">
+     
+      <div>
+        <label for="dob" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" [(ngModel)]="goat.dob" required
+          class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
+      </div>
+  
+      <!-- Sex Selection -->
+      <div>
+        <label for="sex" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Sex:</label>
+        <select id="sex" name="sex" [(ngModel)]="goat.sex" required
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+      </div>
+  
+      <!-- Breed Selection -->
+      <div>
+        <label for="breed" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Breed:</label>
+        <select id="breed" name="breed" [(ngModel)]="goat.breed" required
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          <option *ngFor="let breed of breeds" [value]="breed.id">{{ breed.breed_name }}</option>
+        </select>
+      </div>
+  
+      <!-- Father Selection with Search -->
+      <div>
+        <label for="father" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Father:</label>
+        <input type="text" placeholder="Search father..." [(ngModel)]="fatherSearchText" (input)="filterFathers()" name="fatherSearch"
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
+        <select id="father" name="father" [(ngModel)]="goat.father"
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          <option *ngFor="let father of filteredFathers" [value]="father.id">{{ father.id }}</option>
+        </select>
+      </div>
+  
+      <!-- Mother Selection with Search -->
+      <div>
+        <label for="mother" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Mother:</label>
+        <input type="text" placeholder="Search mother..." [(ngModel)]="motherSearchText" (input)="filterMothers()" name="motherSearch"
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
+        <select id="mother" name="mother" [(ngModel)]="goat.mother"
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          <option *ngFor="let mother of filteredMothers" [value]="mother.id">{{ mother.id }}</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="tag_color" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Tag Color:</label>
+        <input type="text" id="tag_color" name="tag_color" [(ngModel)]="goat.tag_color" required
+          class="w-full p-2 border border-gray-300 rounded-md focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream" />
+      </div>
+
+      <!-- status -->
+                     <!-- ANIMAL_STATUS_CHOICES = [
+                      ('Alive', 'Alive'),
+                      ('Dead', 'Dead'),
+                      ('Sold', 'Sold'),
+                      ('Slaughtered', 'Slaughtered'),
+                      ('Stolen', 'Stolen'),
+                      ('Lost', 'Lost'),
+                      ('Unknown', 'Unknown'),
+                      ('Sick', 'Sick'),
+                    ] -->
+      <div>
+        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Status:</label>
+        <select id="status" name="status" [(ngModel)]="goat.status" required
+          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          <option value="Alive">Alive</option>
+          <option value="Dead">Dead</option>
+          <option value="Sold">Sold</option>
+          <option value="Slaughtered">Slaughtered</option>
+          <option value="Stolen">Stolen</option>
+          <option value="Lost">Lost</option>
+          <option value="Unknown">Unknown</option>
+          <option value="Sick">Sick</option>
+        </select>
+      </div>
+  
+      <button type="submit" [disabled]="goatForm.invalid"
+        class="w-sm mx-auto bg-primary text-white p-2 rounded-md shadow-md hover:bg-primary-dark transition-all dark:bg-primary-light dark:hover:bg-primary-dark">
+        Submit Edit
+      </button>
+    </form>
+  </div>

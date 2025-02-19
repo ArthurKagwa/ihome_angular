@@ -10,9 +10,9 @@ import { FarmStaffComponent } from './farms/farm-staff/farm-staff.component';
 import { FarmMedicationComponent } from './farms/farm-medication/farm-medication.component';
 import { FarmViewComponent } from './farms/farm-view/farm-view.component';
 // import { AnimalComponent } from './animals/animal/animal.component';
-import { GoatsComponent } from './animals/goats/goats.component';
+import { GoatsComponent } from './animals/goats-views/goats/goats.component';
 import { AuthGuard } from './auth.guard';
-import { GoatViewComponent } from './animals/goat-view/goat-view.component';
+import { GoatViewComponent } from './animals/goats-views/goat-view/goat-view.component';
 
 
 export const routes: Routes = [
@@ -30,5 +30,7 @@ export const routes: Routes = [
     { path: 'farms/:farmId/view', component: FarmViewComponent ,canActivate: [AuthGuard]},
     // { path: 'animals/:farmId' ,component: AnimalComponent},
     { path: 'animals/goats/:farmId', component: GoatsComponent ,canActivate: [AuthGuard]},
-    { path: 'goat/:goatId', component: GoatViewComponent, canActivate: [AuthGuard] },
-];
+    { path: 'goat/:farmId/:goatId', component: GoatViewComponent, canActivate: [AuthGuard] },
+
+    ];
+

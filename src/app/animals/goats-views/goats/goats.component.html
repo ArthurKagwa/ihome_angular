@@ -154,6 +154,7 @@
             <th class="py-3 px-4 text-left">Mother</th>
             <th class="py-3 px-4 text-left">Father</th>
             <th class="py-3 px-4 text-left">Breed</th>
+            <th class="py-3 px-4 text-left">Status</th>
             <th class="py-3 px-4 text-left">Actions</th>
           </tr>
         </thead>
@@ -170,6 +171,28 @@
             <td class="py-3 px-4">{{ goat.mother }}</td>
             <td class="py-3 px-4">{{ goat.father }}</td>
             <td class="py-3 px-4">{{ getBreedName(goat.breed) }}</td>
+
+            <!-- Status -->
+            <td class="py-3 px-4">
+              <!-- ANIMAL_STATUS_CHOICES = [
+    ('Alive', 'Alive'),
+    ('Dead', 'Dead'),
+    ('Sold', 'Sold'),
+    ('Slaughtered', 'Slaughtered'),
+    ('Stolen', 'Stolen'),
+    ('Lost', 'Lost'),
+    ('Unknown', 'Unknown'),
+    ('Sick', 'Sick'),
+    ] -->
+              <span *ngIf="goat.status === 'Alive'" class="text-green-600 dark:text-green-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Dead'" class="text-red-600 dark:text-red-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Sold'" class="text-blue-600 dark:text-blue-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Slaughtered'" class="text-red-600 dark:text-red-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Stolen'" class="text-red-600 dark:text-red-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Lost'" class="text-red-600 dark:text-red-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Unknown'" class="text-gray-600 dark:text-gray-400">{{ goat.status }}</span>
+              <span *ngIf="goat.status === 'Sick'" class="text-yellow-600 dark:text-yellow-400">{{ goat.status }}</span>
+            </td>
   
             <!-- Actions -->
             <td class="py-3 px-4">

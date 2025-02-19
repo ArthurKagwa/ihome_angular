@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Form, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AnimalService } from '../../services/animal.service';
-import { BreedService } from '../../services/breed.service';
+import { AnimalService } from '../../../services/animal.service';
+import { BreedService } from '../../../services/breed.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TypeService } from '../../services/type.service';
+import { TypeService } from '../../../services/type.service';
 
 @Component({
   selector: 'app-goats',
@@ -42,7 +42,7 @@ getBreedName(gbreed: any) {
     this.showGoatForm = !this.showGoatForm;
   }
 
-  constructor(private animalService: AnimalService, private breedService: BreedService, private route: ActivatedRoute, private typeService: TypeService, private router: Router) {
+  constructor(protected animalService: AnimalService, protected breedService: BreedService, protected route: ActivatedRoute, protected typeService: TypeService, protected router: Router) {
   
   }
 
@@ -65,7 +65,7 @@ getBreedName(gbreed: any) {
     });
   }
 
-  fetchGoats() {
+  protected fetchGoats() {
     this.animalService.getAnimalsByType('goat',this.farm).subscribe({
       next: (data) => {
         this.goats = data;
@@ -75,6 +75,7 @@ getBreedName(gbreed: any) {
         this.fetchMothers(this.goats);
         this.filteredFathers= this.fathers;
         this.filteredMothers= this.mothers;
+        
       },
       error: (error) => {
         console.error('Error fetching goats:', error);
@@ -85,14 +86,14 @@ getBreedName(gbreed: any) {
 
 
   }
-fetchFathers(goats: any) {
+protected fetchFathers(goats: any) {
   //pick males
   //gender ='M'
   console.log('Goats:', goats);
   this.fathers = goats.filter((goat: any) => goat.sex === 'M');
   console.log('Fathers:', this.fathers);
   }
-  fetchMothers(goats: any) {
+  protected fetchMothers(goats: any) {
     // pick females gender ='F'
     this.mothers = goats.filter((goat:any) => goat.sex === 'F');
     console.log('Mothers:', this.mothers);
@@ -131,6 +132,7 @@ fetchFathers(goats: any) {
       const formData = goatForm.value;
       formData.type = 'goat';  
       formData.farm = this.farm;
+      formData.status = 'Alive';
 
       this.addAnimal(formData);
 
@@ -151,20 +153,21 @@ fetchFathers(goats: any) {
     }); 
 
   }
-  filterFathers(): void {
+  protected filterFathers(): void {
     console.log('filter');
     this.filteredFathers = this.fathers.filter((father:any) =>
       father.id.includes(this.fatherSearchText.toLowerCase())
     );
   }
-  filterMothers(): void {
+  protected filterMothers(): void {
     this.filteredMothers = this.mothers.filter((mother:any) =>
       mother.id.includes(this.motherSearchText.toLowerCase())
     );
   }
   editGoat(goat: any) {
     console.log('Editing goat:', goat);
-    // Implement edit functionality (e.g., open modal for editing)
+    this.router.navigate(['/goats/edit/',this.farm,goat.id]);
+
   }
 
   deleteGoat(id: string) {
@@ -175,7 +178,9 @@ fetchFathers(goats: any) {
   //view goat
   viewGoat(goatId: any){
     console.log('Viewing goat:', goatId);
-    this.router.navigate(['/goat/',goatId]);
+    this.router.navigate(['/goat/',this.farm,goatId]);
   }
+  //edit goat
+  
 
 }
