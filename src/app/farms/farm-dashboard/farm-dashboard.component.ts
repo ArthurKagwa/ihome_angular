@@ -4,25 +4,39 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { FarmSidebarComponent } from '../farm-sidebar/farm-sidebar.component';
 
 @Component({
   selector: 'app-farms',
   templateUrl: './farm-dashboard.component.html',
   styleUrls: ['./farm-dashboard.component.css'],
-  imports: [CommonModule, FormsModule, FarmSidebarComponent],
+  imports: [CommonModule, FormsModule, ],
 })
 export class FarmDashboardComponent implements OnInit {
+ 
   farms: any[] = [];
   newFarmName = '';
   newFarmLocation = '';
   newFarmEmail = '';
   newFarmPhone = '';
+  sidebar: any;
   addingError: { [key: string]: string[] } = {}; // ✅ Proper error type
+
+  //toggling components
+  addForm=false;
+  showAddFarmForm(){
+    this.addForm = !this.addForm;
+    return this.addForm;
+  }
+  showFarms = false;
+  showFarmsToggle(){
+    this.showFarms = !this.showFarms;
+    return this.showFarms;
+  }
 
   constructor(private farmsService: FarmsService, private router: Router) {}
   ngOnInit() {
     this.loadFarms();
+  
 
   }
 

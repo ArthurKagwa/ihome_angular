@@ -10,7 +10,7 @@ module.exports = {
         primary: {
           DEFAULT: '#1F2937', // Dark Slate (Professional & Readable)
           light: '#374151', // Medium Grayish Blue (Modern)
-          dark: '#111827', // Deep Graphite (Elegant Contrast)
+          dark: '#212817', // Deep Graphite (Elegant Contrast)
         },
         secondary: {
           DEFAULT: '#F3F4F6', // Light Cool Gray (Clean & Minimal)

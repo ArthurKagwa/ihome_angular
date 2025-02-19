@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
-import { FarmSidebarComponent } from '../farm-sidebar/farm-sidebar.component';
 import { FarmService } from '../../services/farm.service';
 import { TypeService } from '../../services/type.service';
 
 @Component({
   selector: 'app-farm-view',
   standalone: true,
-  imports: [FarmSidebarComponent, CommonModule, FormsModule],
+  imports: [ CommonModule, FormsModule],
   templateUrl: './farm-view.component.html',
   styleUrls: ['./farm-view.component.css'],
 })
