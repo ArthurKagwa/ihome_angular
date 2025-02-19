@@ -114,7 +114,7 @@
         <input type="text" placeholder="Search father..." [(ngModel)]="fatherSearchText" (input)="filterFathers()" name="fatherSearch"
           class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
         <select id="father" name="father" [(ngModel)]="goat.father"
-          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          class="w-sm p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
           <option *ngFor="let father of filteredFathers" [value]="father.id">{{ father.id }}</option>
         </select>
       </div>
@@ -125,7 +125,7 @@
         <input type="text" placeholder="Search mother..." [(ngModel)]="motherSearchText" (input)="filterMothers()" name="motherSearch"
           class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream" />
         <select id="mother" name="mother" [(ngModel)]="goat.mother"
-          class="w-full p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
+          class="w-sm p-2 border border-gray-300 rounded-md dark:bg-secondary dark:text-neutral-cream">
           <option *ngFor="let mother of filteredMothers" [value]="mother.id">{{ mother.id }}</option>
         </select>
       </div>

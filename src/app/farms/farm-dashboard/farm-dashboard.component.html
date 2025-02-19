@@ -1,94 +1,105 @@
-<div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
-    <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Add a New Farm</h2>
-  
-    <form (ngSubmit)="addFarm()" class="space-y-4" >
-        <!-- Farm Name -->
-    <div>
-      <label for="newFarmName" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Name</label>
-      <input
-        type="text"
-        id="newFarmName"
-        [(ngModel)]="newFarmName"
-        name="newFarmName"
-        required
-        class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
-      />
-      <p *ngIf="addingError['name']" class="text-red-500 text-sm mt-2">{{ addingError['name'][0] }}</p>
+<!-- farm sidebar -->
+<div class="flex min-h-screen bg-neutral-cream dark:bg-secondary-dark">
+  <!-- Farm Sidebar -->
+  <app-farm-sidebar></app-farm-sidebar>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 p-8 transition-all duration-300">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+        <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Add a New Farm</h2>
+      
+        <form (ngSubmit)="addFarm()" class="space-y-4" >
+            <!-- Farm Name -->
+        <div>
+          <label for="newFarmName" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Name</label>
+          <input
+            type="text"
+            id="newFarmName"
+            [(ngModel)]="newFarmName"
+            name="newFarmName"
+            required
+            class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
+          />
+          <p *ngIf="addingError['name']" class="text-red-500 text-sm mt-2">{{ addingError['name'][0] }}</p>
+        </div>
+    
+        <!-- Farm Email -->
+        <div>
+          <label for="newFarmEmail" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Email</label>
+          <input
+            type="email"
+            id="newFarmEmail"
+            [(ngModel)]="newFarmEmail"
+            name="newFarmEmail"
+            required
+            class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
+          />
+          <p *ngIf="addingError['email']" class="text-red-500 text-sm mt-2">{{ addingError['email'][0] }}</p>
+        </div>
+    
+        <!-- Farm Location -->
+        <div>
+          <label for="newFarmLocation" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Location</label>
+          <input
+            type="text"
+            id="newFarmLocation"
+            [(ngModel)]="newFarmLocation"
+            name="newFarmLocation"
+            required
+            class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
+          />
+          <p *ngIf="addingError['location']" class="text-red-500 text-sm mt-2">{{ addingError['location'][0] }}</p>
+        </div>
+    
+        <!-- Farm Phone -->
+        <div>
+          <label for="newFarmPhone" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Phone</label>
+          <input
+            type="text"
+            id="newFarmPhone"
+            [(ngModel)]="newFarmPhone"
+            name="newFarmPhone"
+            required
+            class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
+          />
+          <p *ngIf="addingError['phone_number']" class="text-red-500 text-sm mt-2">{{ addingError['phone_number'][0] }}</p>
+        </div>
+    
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-primary text-white p-2 rounded-md shadow-md hover:bg-primary-dark transition-all dark:bg-primary-light dark:hover:bg-primary-dark"
+          >
+            Add Farm
+          </button>
+        
+        </form>
+      </div>
+    
+      <div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+        <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Farm List</h2>
+      
+        <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
+          <thead class="bg-primary text-white dark:bg-primary-dark">
+            <tr>
+              <th class="py-3 px-4 text-left">Farm Name</th>
+              <th class="py-3 px-4 text-left">Location</th>
+              <th class="py-3 px-4 text-left">Email</th>
+              <th class="py-3 px-4 text-left">Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let farm of farms" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary" (click)="viewFarm(farm.id)">
+                <td class="py-3 px-4">{{ farm.name }}</td>
+                <td class="py-3 px-4">{{ farm.location }}</td>
+                <td class="py-3 px-4">{{ farm.email }}</td>
+                <td class="py-3 px-4">{{ farm.phone_number }}</td>         
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
     </div>
-
-    <!-- Farm Email -->
-    <div>
-      <label for="newFarmEmail" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Email</label>
-      <input
-        type="email"
-        id="newFarmEmail"
-        [(ngModel)]="newFarmEmail"
-        name="newFarmEmail"
-        required
-        class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
-      />
-      <p *ngIf="addingError['email']" class="text-red-500 text-sm mt-2">{{ addingError['email'][0] }}</p>
-    </div>
-
-    <!-- Farm Location -->
-    <div>
-      <label for="newFarmLocation" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Location</label>
-      <input
-        type="text"
-        id="newFarmLocation"
-        [(ngModel)]="newFarmLocation"
-        name="newFarmLocation"
-        required
-        class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
-      />
-      <p *ngIf="addingError['location']" class="text-red-500 text-sm mt-2">{{ addingError['location'][0] }}</p>
-    </div>
-
-    <!-- Farm Phone -->
-    <div>
-      <label for="newFarmPhone" class="block text-sm font-medium text-gray-700 dark:text-neutral-cream">Farm Phone</label>
-      <input
-        type="text"
-        id="newFarmPhone"
-        [(ngModel)]="newFarmPhone"
-        name="newFarmPhone"
-        required
-        class="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary dark:bg-secondary dark:text-neutral-cream"
-      />
-      <p *ngIf="addingError['phone_number']" class="text-red-500 text-sm mt-2">{{ addingError['phone_number'][0] }}</p>
-    </div>
-
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="w-full bg-primary text-white p-2 rounded-md shadow-md hover:bg-primary-dark transition-all dark:bg-primary-light dark:hover:bg-primary-dark"
-      >
-        Add Farm
-      </button>
-     
-    </form>
-  </div>
-
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
-    <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Farm List</h2>
-  
-    <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
-      <thead class="bg-primary text-white dark:bg-primary-dark">
-        <tr>
-          <th class="py-3 px-4 text-left">Farm Name</th>
-          <th class="py-3 px-4 text-left">Location</th>
-          <th class="py-3 px-4 text-left">Email</th>
-          <th class="py-3 px-4 text-left">Phone</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let farm of farms" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary" (click)="viewFarm(farm.id)">
-            <td class="py-3 px-4">{{ farm.name }}</td>
-            <td class="py-3 px-4">{{ farm.location }}</td>
-            <td class="py-3 px-4">{{ farm.email }}</td>
-            <td class="py-3 px-4">{{ farm.phone_number }}</td>         
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  </main>
+</div>

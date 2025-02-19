@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { FarmSidebarComponent } from '../farm-sidebar/farm-sidebar.component';
 
 @Component({
   selector: 'app-farms',
   templateUrl: './farm-dashboard.component.html',
   styleUrls: ['./farm-dashboard.component.css'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FarmSidebarComponent],
 })
 export class FarmDashboardComponent implements OnInit {
   farms: any[] = [];

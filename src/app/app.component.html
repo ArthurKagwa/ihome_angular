@@ -1,2 +1,3 @@
-<app-topnav></app-topnav>
+<app-topnav *ngIf="isAuthenticated()===false"></app-topnav>
+<app-authenticated-top-nav *ngIf="isAuthenticated()===true"></app-authenticated-top-nav>
 <router-outlet></router-outlet>

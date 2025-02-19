@@ -23,6 +23,7 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       (res) => {
         this.authService.saveToken(res.access, res.refresh);
+        sessionStorage.setItem('username', this.username);
         this.router.navigate(['/']);
       },
       (err) => console.error('Login failed', err)

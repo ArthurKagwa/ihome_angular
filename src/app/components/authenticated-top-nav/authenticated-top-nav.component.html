@@ -11,24 +11,8 @@
   
         <!-- Navigation Links -->
         <div class="hidden md:flex space-x-4">
-          <!-- Unauthenticated Links -->
+         
           <ng-container >
-            <a
-              href="login"
-              class="text-primary hover:text-primary-dark dark:text-neutral-cream dark:hover:text-primary-light cursor-pointer"
-            >
-              Login
-            </a>
-            <a
-              href="signup"
-              class="text-accent-yellow hover:underline dark:text-accent-orange cursor-pointer"
-            >
-              Signup
-            </a>
-          </ng-container>
-  
-          <!-- Authenticated Links -->
-          <ng-container *ngIf="isAuth === true">
             <a href="farms"
               class="text-primary hover:text-primary-dark dark:text-neutral-cream dark:hover:text-primary-light"
             >
@@ -74,24 +58,8 @@
     <!-- Mobile Menu -->
     <div *ngIf="isMobileMenuOpen" class="md:hidden bg-neutral-cream dark:bg-secondary-dark">
       <div class="space-y-1 px-2 pb-3 pt-2">
-        <!-- Unauthenticated Links -->
-        <ng-container *ngIf="isAuth === false">
-          <a
-            href="login"
-            class="block text-primary hover:bg-primary-light px-3 py-2 rounded-md text-base font-medium dark:text-neutral-cream dark:hover:bg-primary-dark cursor-pointer"
-          >
-            Login
-          </a>
-          <a
-            href="signup"
-            class="block text-accent-yellow hover:underline px-3 py-2 rounded-md text-base font-medium dark:text-accent-orange"
-          >
-            Signup
-          </a>
-        </ng-container>
-  
-        <!-- Authenticated Links -->
-        <ng-container *ngIf="isAuth === true">
+    
+        <ng-container>
           <a
             href="farms"
             class="block text-primary hover:bg-primary-light px-3 py-2 rounded-md text-base font-medium dark:text-neutral-cream dark:hover:bg-primary-dark cursor-pointer"
