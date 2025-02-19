@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -8,11 +8,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './authenticated-top-nav.component.html',
   styleUrl: './authenticated-top-nav.component.css'
 })
-export class AuthenticatedTopNavComponent {
+export class AuthenticatedTopNavComponent implements OnInit {
   constructor(private authService: AuthService) {
 
   }
+  ngOnInit(): void {
+    this.username = sessionStorage.getItem('username');
+  }
 
+  username: any;
   isMobileMenuOpen = false; // For toggling the mobile menu
 
   // Toggle the mobile menu visibility
