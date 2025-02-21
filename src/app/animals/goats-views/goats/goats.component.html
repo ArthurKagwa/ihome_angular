@@ -1,6 +1,22 @@
+
+<div class="max-w-6xl mx-auto mt-10 grid grid-cols-2 gap-4">
+  <div class="p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark text-center">
+    <h1 class="text-2xl font-semibold text-primary dark:text-neutral-cream">No of Breeds</h1>
+    <p class="text-4xl font-bold text-primary dark:text-neutral-cream">{{ breeds.length }}</p>
+  </div>
+  <div class="p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark text-center">
+    <h1 class="text-2xl font-semibold text-primary dark:text-neutral-cream">No of Goats</h1>
+    <p class="text-4xl font-bold text-primary dark:text-neutral-cream">{{ goats.length }}</p>
+  </div>
+</div>
+
 <div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+
+  
   <!-- Title -->
   <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Manage Breeds & Goats</h2>
+
+  
 
   <!-- Buttons to Show Forms -->
   <div class="flex space-x-4">
@@ -13,6 +29,7 @@
   </div>
 
 </div>
+
 
 <!-- Add Breed Form (Shown Only When `showBreedForm` is True) -->
 <div *ngIf="showBreedForm" class="max-w-4xl mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
@@ -117,25 +134,7 @@
 </div>
 
 <!-- Breeds Table -->
-<div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
-  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Breeds List</h2>
-  <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
-    <thead class="bg-primary text-white dark:bg-primary-dark">
-      <tr>
-        <th class="py-3 px-4 text-left">Breed ID</th>
-        <th class="py-3 px-4 text-left">Breed Name</th>
-        <th class="py-3 px-4 text-left">Origin</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let breed of breeds" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
-        <td class="py-3 px-4">{{ breed.id }}</td>
-        <td class="py-3 px-4">{{ breed.breed_name }}</td>
-        <td class="py-3 px-4">{{ breed.breed_origin }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
 
 <div class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
   <!-- Title -->
@@ -207,4 +206,24 @@
         </tbody>
       </table>
   </div>
+</div>
+</div>
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg dark:bg-secondary-dark">
+  <h2 class="text-2xl font-semibold text-primary dark:text-neutral-cream mb-4">Breeds List</h2>
+  <table class="w-full border border-gray-300 rounded-lg shadow-sm overflow-hidden dark:border-neutral-dark">
+    <thead class="bg-primary text-white dark:bg-primary-dark">
+      <tr>
+        <th class="py-3 px-4 text-left">Breed ID</th>
+        <th class="py-3 px-4 text-left">Breed Name</th>
+        <th class="py-3 px-4 text-left">Origin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let breed of breeds" class="border-b dark:border-neutral-dark hover:bg-neutral-cream dark:hover:bg-secondary">
+        <td class="py-3 px-4">{{ breed.id }}</td>
+        <td class="py-3 px-4">{{ breed.breed_name }}</td>
+        <td class="py-3 px-4">{{ breed.breed_origin }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
