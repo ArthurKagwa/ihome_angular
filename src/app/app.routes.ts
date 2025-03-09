@@ -31,6 +31,7 @@ export const routes: Routes = [
     // { path: 'animals/:farmId' ,component: AnimalComponent},
     { path: 'animals/goats/:farmId', component: GoatsComponent ,canActivate: [AuthGuard]},
     { path: 'goat/:farmId/:goatId', component: GoatViewComponent, canActivate: [AuthGuard] },
+    { path: 'staff/:farmId', component: FarmStaffComponent, canActivate: [AuthGuard] },
 
     ];
 
