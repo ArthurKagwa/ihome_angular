@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { StaffServiceService } from '../../services/staff-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Form } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-farm-staff',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './farm-staff.component.html',
   styleUrl: './farm-staff.component.css'
 })
@@ -35,6 +35,12 @@ export class FarmStaffComponent implements OnInit {
     console.log(this.staffMembers);
   }
   
-  addStaffMember(){
+  addStaff(staff: any){
+    console.log(staff.value);
+    this.staffService.addStaff(staff.value).subscribe((data: any) => {
+      console.log(data);
+      // this.fetchStaff();
+    });
+  }
 
 }
